@@ -16,8 +16,8 @@ public class OperationController {
     private IUserOperationService userOperationService;
 
     @RequestMapping(value = "/")
-    public String indexPage(Model model) {
-        return "index";
+    public String indexPage() {
+        return INDEX_PAGE;
     }
 
     @GetMapping("/token")
@@ -25,16 +25,37 @@ public class OperationController {
         String token = userOperationService.createUserOperation();
         model.addAttribute(MESSAGE_ATTRIBUTE, TOKEN_GENERATED_MESSAGE.concat(token));
         model.addAttribute(MESSAGE_STYLE, ALERT_SUCCESS);
-        return "index";
+        return INDEX_PAGE;
     }
 
     @PostMapping("/operand")
     public String addOperand(@RequestParam(value = "token") String token,
-                             @RequestParam(value = "operand") String operand,Model model) {
+                             @RequestParam(value = "operand") String operand, Model model) {
 
 
-        return "index";
+        return INDEX_PAGE;
     }
+
+    @GetMapping("/sum")
+    public String sum() {
+        return INDEX_PAGE;
+    }
+
+    @GetMapping("/subtract")
+    public String subtract() {
+        return INDEX_PAGE;
+    }
+
+    @GetMapping("/multiply")
+    public String multiply() {
+        return INDEX_PAGE;
+    }
+
+    @GetMapping("/potentiation")
+    public String potentiation() {
+        return INDEX_PAGE;
+    }
+
 
 
 }

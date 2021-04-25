@@ -8,4 +8,6 @@ public class GeneralConstants {
     public static final String ALERT_DANGER = "alert alert-danger";
 
     public static final String TOKEN_GENERATED_MESSAGE = "Se generó el token # ";
+
+    public static final String INDEX_PAGE = "index";
 }
