@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
+          crossorigin="anonymous">
+</head>
+<body>
+
+<div class="container mt-4">
+
+    <a th:href="@{/create_player}" class="btn btn-primary">Solicitar token</a>
+    <a th:href="@{/create_player}" class="btn btn-primary">Ver historial</a>
+    <a th:href="@{/start_matches}" class="btn btn-success">Sumar</a>
+    <a th:href="@{/clear_all}" class="btn btn-success">Restar</a>
+    <a th:href="@{/clear_all}" class="btn btn-success">Multiplicar</a>
+    <a th:href="@{/clear_all}" class="btn btn-success">Dividir</a>
+    <a th:href="@{/clear_all}" class="btn btn-success">Potenciar</a>
+
+
+    <p></p>
+    <p></p>
+</div>
+
+</body>
+</html>
