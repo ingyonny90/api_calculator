@@ -4,7 +4,9 @@ import com.api.calculator.exceptions.UserOperationNoFoundException;
 import com.api.calculator.model.Operand;
 import com.api.calculator.model.UserOperation;
 import com.api.calculator.repo.IUserOperationRepo;
+import com.api.calculator.service.IOperandService;
 import com.api.calculator.service.IUserOperationService;
+import com.api.calculator.utilities.OperationUtil;
 import com.api.calculator.utilities.OperatorType;
 import com.api.calculator.utilities.validation.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ public class UserOperationService implements IUserOperationService {
 
     @Autowired
     private IUserOperationRepo userOperationRepo;
+
+    @Autowired
+    private IOperandService operandService;
 
     @Override
     @Transactional
@@ -42,38 +47,46 @@ public class UserOperationService implements IUserOperationService {
     public BigDecimal calculateOperation(String token, OperatorType operationType) {
         ValidationUtil.validateRequiredFields(token);
         UserOperation userOperation = findByToken(token);
-        BigDecimal result = getResultByOperationType(filterActiveOperand(userOperation.getOperandList())
+        List<Operand> activeOperandList = filterActiveOperand(userOperation.getOperandList());
+        BigDecimal result = getResultByOperationType(convertOperandToBigDecimalList(activeOperandList)
                 , operationType, userOperation.getResult());
         userOperation.setResult(result);
         userOperationRepo.save(userOperation);
+        operandService.inactiveOperand(activeOperandList);
         return result;
     }
 
     private BigDecimal getResultByOperationType(List<BigDecimal> operandList, OperatorType operationType, BigDecimal currentResult) {
+        OperationUtil operationUtil = new OperationUtil();
         switch (operationType) {
             case SUM:
-                currentResult = operandList.stream().reduce(BigDecimal.ZERO,BigDecimal::add).add(currentResult);
+                currentResult = operationUtil.sum(operandList,currentResult);
                 break;
             case SUBTRACT:
-                //result = operands.stream().reduce(BigDecimal::subtract).orElseThrow(OperationNotAllowed::new);
+                currentResult = operationUtil.subtract(operandList,currentResult);
                 break;
             case MULTIPLY:
-                //result = operands.stream().reduce(BigDecimal.ONE, BigDecimal::multiply);
+                currentResult = operationUtil.multiply(operandList,currentResult);
                 break;
             case DIVIDE:
-                //result = divide(operands);
+                currentResult = operationUtil.divide(operandList,currentResult);
                 break;
             case EMPOWERMENT:
-                //result = exp(operands);
+                currentResult = operationUtil.empowerment(operandList,currentResult);
                 break;
         }
 
         return currentResult;
     }
 
-    private List<BigDecimal> filterActiveOperand(List<Operand> operandList) {
+    private List<Operand> filterActiveOperand(List<Operand> operandList) {
         return operandList.stream().
-                filter(operand -> operand.isActive()).map(Operand::getOperandNumber)
+                filter(operand -> operand.isActive())
+                .collect(Collectors.toList());
+    }
+
+    private List<BigDecimal> convertOperandToBigDecimalList(List<Operand> operandList) {
+        return operandList.stream().map(Operand::getOperandNumber)
                 .collect(Collectors.toList());
     }
 }

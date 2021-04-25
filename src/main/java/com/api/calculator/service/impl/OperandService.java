@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.Iterator;
+import java.util.List;
 
 @Service
 public class OperandService implements IOperandService {
@@ -33,6 +35,14 @@ public class OperandService implements IOperandService {
                 .operandNumber(parseStringToBigDecimal(operand))
                 .build());
 
+    }
+
+    @Override
+    public void inactiveOperand(List<Operand> operandList) {
+        operandList.parallelStream().forEach(operand -> {
+            operand.setActive(Boolean.FALSE);
+            operandRepo.save(operand);
+        });
     }
 
     private BigDecimal parseStringToBigDecimal(String operand) {
