@@ -16,12 +16,7 @@
 <div class="container mt-4">
 
     <a th:href="@{/token}" class="btn btn-primary">Solicitar token</a>
-    <a th:href="@{/create_player}" class="btn btn-primary">Ver historial</a>
-    <a th:href="@{/start_matches}" class="btn btn-success">Sumar</a>
-    <a th:href="@{/clear_all}" class="btn btn-success">Restar</a>
-    <a th:href="@{/clear_all}" class="btn btn-success">Multiplicar</a>
-    <a th:href="@{/clear_all}" class="btn btn-success">Dividir</a>
-    <a th:href="@{/clear_all}" class="btn btn-success">Potenciar</a>
+    <a th:href="@{/}" class="btn btn-primary">Ver historial</a>
     <p></p>
     <p></p>
 </div>
@@ -42,6 +37,37 @@
                         <input th:name="operand" type="text" class="form-control"/>
                         <div class="card-footer">
                             <input type="submit" value="Guardar" class="btn btn-success"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="container mt-4">
+    <form th:action="@{/calculate}" method="post">
+
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Ejecutar operación</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label>Token:</label>
+                        <input th:name="token" type="text" class="form-control"/>
+
+                        <label>Tipo de operación:</label>
+                        <select th:name="operationType" class="form-control">
+                            <option value="sum">Suma</option>
+                            <option value="subtract">Resta</option>
+                            <option value="multiply">Multiplicación</option>
+                            <option value="divide">División</option>
+                            <option value="potenciation">Potenciación</option>
+                        </select>
+                        <div class="card-footer">
+                            <input type="submit" value="Ejecutar" class="btn btn-success"/>
                         </div>
                     </div>
                 </div>

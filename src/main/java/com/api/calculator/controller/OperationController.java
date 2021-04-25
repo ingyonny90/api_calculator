@@ -36,25 +36,14 @@ public class OperationController {
         return INDEX_PAGE;
     }
 
-    @GetMapping("/sum")
-    public String sum() {
+    @PostMapping("/calculate")
+    public String calculateOperation(@RequestParam(value = "token") String token,
+                                 @RequestParam(value = "operationType") String operationType, Model model) {
+
+
         return INDEX_PAGE;
     }
 
-    @GetMapping("/subtract")
-    public String subtract() {
-        return INDEX_PAGE;
-    }
-
-    @GetMapping("/multiply")
-    public String multiply() {
-        return INDEX_PAGE;
-    }
-
-    @GetMapping("/potentiation")
-    public String potentiation() {
-        return INDEX_PAGE;
-    }
 
 
 
