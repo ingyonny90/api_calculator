@@ -10,19 +10,44 @@
 </head>
 <body>
 
+<div th:class="${style}" role="alert" th:text="${message}">
+</div>
+
 <div class="container mt-4">
 
-    <a th:href="@{/create_player}" class="btn btn-primary">Solicitar token</a>
+    <a th:href="@{/token}" class="btn btn-primary">Solicitar token</a>
     <a th:href="@{/create_player}" class="btn btn-primary">Ver historial</a>
     <a th:href="@{/start_matches}" class="btn btn-success">Sumar</a>
     <a th:href="@{/clear_all}" class="btn btn-success">Restar</a>
     <a th:href="@{/clear_all}" class="btn btn-success">Multiplicar</a>
     <a th:href="@{/clear_all}" class="btn btn-success">Dividir</a>
     <a th:href="@{/clear_all}" class="btn btn-success">Potenciar</a>
-
-
     <p></p>
     <p></p>
+</div>
+<div class="container mt-4">
+    <form th:action="@{/operand}" method="post">
+
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Agregar operandos</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label>Token:</label>
+                        <input th:name="token" type="text" class="form-control"/>
+
+                        <label>Operando:</label>
+                        <input th:name="operand" type="text" class="form-control"/>
+                        <div class="card-footer">
+                            <input type="submit" value="Guardar" class="btn btn-success"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
 
 </body>
