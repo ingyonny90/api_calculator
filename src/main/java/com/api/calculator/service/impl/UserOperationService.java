@@ -56,7 +56,7 @@ public class UserOperationService implements IUserOperationService {
         return result;
     }
 
-    private BigDecimal getResultByOperationType(List<BigDecimal> operandList, OperatorType operationType, BigDecimal currentResult) {
+    public BigDecimal getResultByOperationType(List<BigDecimal> operandList, OperatorType operationType, BigDecimal currentResult) {
         OperationUtil operationUtil = new OperationUtil();
         switch (operationType) {
             case SUM:
