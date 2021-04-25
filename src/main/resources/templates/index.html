@@ -30,7 +30,7 @@
                 </div>
                 <div class="card-body">
                     <div class="form-group">
-                        <label>Token:</label>
+                        <label class="required">Token: *</label>
                         <input th:name="token" type="text" class="form-control"/>
 
                         <label>Operando:</label>
@@ -60,11 +60,11 @@
 
                         <label>Tipo de operación:</label>
                         <select th:name="operationType" class="form-control">
-                            <option value="sum">Suma</option>
-                            <option value="subtract">Resta</option>
-                            <option value="multiply">Multiplicación</option>
-                            <option value="divide">División</option>
-                            <option value="potenciation">Potenciación</option>
+                            <option value="SUM">Suma</option>
+                            <option value="SUBTRACT">Resta</option>
+                            <option value="MULTIPLY">Multiplicación</option>
+                            <option value="DIVIDE">División</option>
+                            <option value="EMPOWERMENT">Potenciación</option>
                         </select>
                         <div class="card-footer">
                             <input type="submit" value="Ejecutar" class="btn btn-success"/>
