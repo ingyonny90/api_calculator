@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -33,7 +34,6 @@ public class UserOperationService implements IUserOperationService {
     public String createUserOperation() {
         return userOperationRepo.save(UserOperation.builder()
                 .token(UUID.randomUUID().toString())
-                .result(BigDecimal.ZERO)
                 .build()).getToken();
     }
 
@@ -48,35 +48,49 @@ public class UserOperationService implements IUserOperationService {
         ValidationUtil.validateRequiredFields(token);
         UserOperation userOperation = findByToken(token);
         List<Operand> activeOperandList = filterActiveOperand(userOperation.getOperandList());
-        BigDecimal result = getResultByOperationType(convertOperandToBigDecimalList(activeOperandList)
-                , operationType, userOperation.getResult());
+        List<BigDecimal> operands = addSavedResultResultOnOperandList(userOperation.getResult(),
+                convertOperandToBigDecimalList(activeOperandList));
+        BigDecimal result = getResultByOperationType(operands, operationType);
         userOperation.setResult(result);
         userOperationRepo.save(userOperation);
         operandService.inactiveOperand(activeOperandList);
         return result;
     }
 
-    public BigDecimal getResultByOperationType(List<BigDecimal> operandList, OperatorType operationType, BigDecimal currentResult) {
-        OperationUtil operationUtil = new OperationUtil();
-        switch (operationType) {
-            case SUM:
-                currentResult = operationUtil.sum(operandList,currentResult);
-                break;
-            case SUBTRACT:
-                currentResult = operationUtil.subtract(operandList,currentResult);
-                break;
-            case MULTIPLY:
-                currentResult = operationUtil.multiply(operandList,currentResult);
-                break;
-            case DIVIDE:
-                currentResult = operationUtil.divide(operandList,currentResult);
-                break;
-            case EMPOWERMENT:
-                currentResult = operationUtil.empowerment(operandList,currentResult);
-                break;
+    private List<BigDecimal> addSavedResultResultOnOperandList(BigDecimal savedResult, List<BigDecimal> operands) {
+        if (savedResult != null) {
+            List<BigDecimal> newOperandList = new ArrayList<BigDecimal>();
+            newOperandList.add(savedResult);
+            newOperandList.addAll(operands);
+            return  newOperandList;
         }
+        return operands;
+    }
 
-        return currentResult;
+    public BigDecimal getResultByOperationType(List<BigDecimal> operandList, OperatorType operationType) {
+        BigDecimal result = null;
+        if (!operandList.isEmpty()) {
+            OperationUtil operationUtil = new OperationUtil();
+
+            switch (operationType) {
+                case SUM:
+                    result = operationUtil.sum(operandList);
+                    break;
+                case SUBTRACT:
+                    result = operationUtil.subtract(operandList);
+                    break;
+                case MULTIPLY:
+                    result = operationUtil.multiply(operandList);
+                    break;
+                case DIVIDE:
+                    result = operationUtil.divide(operandList);
+                    break;
+                case EMPOWERMENT:
+                    result = operationUtil.empowerment(operandList);
+                    break;
+            }
+        }
+        return result;
     }
 
     private List<Operand> filterActiveOperand(List<Operand> operandList) {

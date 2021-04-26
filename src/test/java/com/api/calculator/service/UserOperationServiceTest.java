@@ -27,9 +27,8 @@ public class UserOperationServiceTest {
         operandList.add(new BigDecimal(2));
         operandList.add(new BigDecimal(5));
         OperatorType operationType = OperatorType.SUM;
-        BigDecimal savedResult = BigDecimal.ZERO;
 
-        BigDecimal result = userOperationService.getResultByOperationType(operandList,operationType,savedResult);
+        BigDecimal result = userOperationService.getResultByOperationType(operandList,operationType);
 
         assertThat(result).isEqualTo(new BigDecimal(7));
     }
@@ -40,11 +39,9 @@ public class UserOperationServiceTest {
         operandList.add(new BigDecimal(2));
         operandList.add(new BigDecimal(5));
         OperatorType operationType = OperatorType.SUBTRACT;
-        BigDecimal savedResult = BigDecimal.ZERO;
+        BigDecimal result = userOperationService.getResultByOperationType(operandList,operationType);
 
-        BigDecimal result = userOperationService.getResultByOperationType(operandList,operationType,savedResult);
-
-        assertThat(result).isEqualTo(new BigDecimal(-7));
+        assertThat(result).isEqualTo(new BigDecimal(-3));
     }
 
     @Test
@@ -53,9 +50,8 @@ public class UserOperationServiceTest {
         operandList.add(new BigDecimal(2));
         operandList.add(new BigDecimal(5));
         OperatorType operationType = OperatorType.MULTIPLY;
-        BigDecimal savedResult = BigDecimal.ZERO;
 
-        BigDecimal result = userOperationService.getResultByOperationType(operandList,operationType,savedResult);
+        BigDecimal result = userOperationService.getResultByOperationType(operandList,operationType);
 
         assertThat(result).isEqualTo(new BigDecimal(10));
     }
@@ -66,9 +62,8 @@ public class UserOperationServiceTest {
         operandList.add(new BigDecimal(10));
         operandList.add(new BigDecimal(5));
         OperatorType operationType = OperatorType.DIVIDE;
-        BigDecimal savedResult = BigDecimal.ZERO;
 
-        BigDecimal result = userOperationService.getResultByOperationType(operandList,operationType,savedResult);
+        BigDecimal result = userOperationService.getResultByOperationType(operandList,operationType);
 
         assertThat(result).isEqualTo(new BigDecimal(2));
     }
@@ -79,10 +74,19 @@ public class UserOperationServiceTest {
         operandList.add(new BigDecimal(2));
         operandList.add(new BigDecimal(2));
         OperatorType operationType = OperatorType.EMPOWERMENT;
-        BigDecimal savedResult = BigDecimal.ZERO;
 
-        BigDecimal result = userOperationService.getResultByOperationType(operandList,operationType,savedResult);
+        BigDecimal result = userOperationService.getResultByOperationType(operandList,operationType);
 
         assertThat(result).isEqualTo(new BigDecimal(4));
+    }
+
+    @Test
+    public void testGetResultByOperationTypeWhenOperandListIsEmptyMustReturnNull(){
+        List<BigDecimal> operandList = new ArrayList<BigDecimal>();
+        OperatorType operationType = OperatorType.EMPOWERMENT;
+
+        BigDecimal result = userOperationService.getResultByOperationType(operandList,operationType);
+
+        assertThat(result).isNull();
     }
 }

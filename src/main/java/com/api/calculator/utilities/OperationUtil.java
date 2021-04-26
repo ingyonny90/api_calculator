@@ -7,48 +7,45 @@ import java.util.List;
 
 public class OperationUtil {
 
-    public BigDecimal sum(List<BigDecimal> operandList, BigDecimal savedResult) {
-        return savedResult.add(operandList.stream().reduce(BigDecimal.ZERO, BigDecimal::add));
+    public BigDecimal sum(List<BigDecimal> operandList) {
+        return operandList.stream().reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    public BigDecimal subtract(List<BigDecimal> operandList, BigDecimal savedResult) {
-        return operandList.stream().reduce(BigDecimal.ZERO, BigDecimal::subtract).subtract(savedResult);
+    public BigDecimal subtract(List<BigDecimal> operandList) {
+        BigDecimal totalResult = operandList.get(BigDecimal.ZERO.intValue());
+        for (int index = BigDecimal.ONE.intValue(); index < operandList.size(); index++) {
+            BigDecimal newOperand = operandList.get(index);
+            totalResult = totalResult.subtract(newOperand);
+        }
+        return totalResult;
     }
 
-    public BigDecimal multiply(List<BigDecimal> operandList, BigDecimal savedResult) {
-        savedResult = isEqualsToZero(savedResult) ? BigDecimal.ONE : savedResult;
-        return savedResult.multiply(operandList.stream().reduce(BigDecimal.ONE, BigDecimal::multiply));
+    public BigDecimal multiply(List<BigDecimal> operandList) {
+        return operandList.stream().reduce(BigDecimal.ONE, BigDecimal::multiply);
     }
 
-    public BigDecimal divide(List<BigDecimal> operandList, BigDecimal savedResult) {
-        BigDecimal totalResult = BigDecimal.ONE;
+    public BigDecimal divide(List<BigDecimal> operandList) {
+        BigDecimal totalResult = operandList.get(BigDecimal.ZERO.intValue());
         try {
-            if (!operandList.isEmpty()) {
-                totalResult = operandList.get(BigDecimal.ZERO.intValue());
-                for (int index = BigDecimal.ONE.intValue(); index < operandList.size(); index++) {
-                    BigDecimal newOperand = operandList.get(index);
-                    totalResult = totalResult.divide(newOperand);
-                }
+            for (int index = BigDecimal.ONE.intValue(); index < operandList.size(); index++) {
+                BigDecimal newOperand = operandList.get(index);
+                totalResult = totalResult.divide(newOperand);
             }
         } catch (ArithmeticException exception) {
             throw new DivisionByZeroException();
         }
-        return !isEqualsToZero(savedResult) ? savedResult.divide(totalResult) : totalResult;
+        return totalResult;
     }
 
-    public BigDecimal empowerment(List<BigDecimal> operandList, BigDecimal savedResult) {
-        BigDecimal totalResult = null;
-        if (!operandList.isEmpty()) {
-            totalResult = operandList.get(BigDecimal.ZERO.intValue());
-            for (int index = BigDecimal.ONE.intValue(); index < operandList.size(); index++) {
-                BigDecimal newOperand = operandList.get(index);
-                totalResult = totalResult.pow(newOperand.intValue());
-            }
+    public BigDecimal empowerment(List<BigDecimal> operandList) {
+        BigDecimal totalResult = operandList.get(BigDecimal.ZERO.intValue());
+        for (int index = BigDecimal.ONE.intValue(); index < operandList.size(); index++) {
+            BigDecimal newOperand = operandList.get(index);
+            totalResult = totalResult.pow(newOperand.intValue());
         }
-        return !isEqualsToZero(savedResult) ? savedResult.pow(totalResult.intValue()) : totalResult;
+
+        return totalResult;
     }
 
-    public boolean isEqualsToZero(BigDecimal value){
-        return value.compareTo(BigDecimal.ZERO) == BigDecimal.ZERO.intValue();
-    }
+
 }

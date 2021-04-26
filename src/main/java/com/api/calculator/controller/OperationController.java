@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 @Controller
 public class OperationController {
@@ -50,7 +51,8 @@ public class OperationController {
                                      @RequestParam(value = "operationType") OperatorType operationType, Model model) {
 
         BigDecimal result = userOperationService.calculateOperation(token,operationType);
-        model.addAttribute(MESSAGE_ATTRIBUTE, RESULT_GENERATED_INFO_MESSAGE.concat(result.toString()));
+        model.addAttribute(MESSAGE_ATTRIBUTE, RESULT_GENERATED_INFO_MESSAGE
+                .concat(String.valueOf(Optional.ofNullable(result).orElse(BigDecimal.ZERO))));
         model.addAttribute(MESSAGE_STYLE, ALERT_SUCCESS);
         return INDEX_PAGE;
     }
