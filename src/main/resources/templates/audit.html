@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
+          crossorigin="anonymous">
+</head>
+<body>
+
+<div class="container mt-4">
+    <h5 align="center">Auditoria</h5>
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th>Creado por</th>
+            <th>Actualizado por</th>
+            <th>Fecha de creación</th>
+            <th>Fecha de actualización</th>
+            <th>Token</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="audit:${userOperationAudit}">
+            <td th:text="${audit.createUser}"></td>
+            <td th:text="${audit.updateUser}"></td>
+            <td th:text="${audit.creationTime}"></td>
+            <td th:text="${audit.updateTime}"></td>
+            <td th:text="${audit.token}"></td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+</body>
+</html>

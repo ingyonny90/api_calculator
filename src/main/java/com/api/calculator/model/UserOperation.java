@@ -1,5 +1,6 @@
 package com.api.calculator.model;
 
+import com.api.calculator.model.audit.Auditable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "user_operation")
-public class UserOperation {
+public class UserOperation extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

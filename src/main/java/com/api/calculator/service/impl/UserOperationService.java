@@ -103,4 +103,9 @@ public class UserOperationService implements IUserOperationService {
         return operandList.stream().map(Operand::getOperandNumber)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<UserOperation> findAllUserOperation(){
+        return userOperationRepo.findAll();
+    }
 }
