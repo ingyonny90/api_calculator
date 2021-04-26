@@ -84,8 +84,8 @@ jobs:
     - name: Push to Docker Hub
       uses: docker/build-push-action@v1
       with:
-        username: ingyonny90
-        password: dockerINGYONNY90
+        username: ${{ secrets.DOCKER_USER_NAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
         repository: ingyonny90/api_calculator
         tag_with_ref: true
       

@@ -4,8 +4,6 @@ services:
     image: postgres
     ports:
       - 5432:5432
-    expose:
-      - 5432
     environment:
       - POSTGRES_PASSWORD=123
       - POSTGRES_USER=postgres
@@ -14,7 +12,7 @@ services:
   api-calculator:
     build:
       context: .
-      dockerfile: .docker/Dockerfile.local
+      dockerfile: Dockerfile
     environment:
       - DATABASE_HOST=postgresqldb
     depends_on:
