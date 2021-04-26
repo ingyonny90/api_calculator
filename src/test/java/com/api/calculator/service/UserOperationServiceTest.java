@@ -15,7 +15,7 @@ import java.util.List;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(properties = "spring.datasource.url=jdbc:postgresql://${DATABASE_HOST:localhost}:5432/calculator")
 public class UserOperationServiceTest {
 
     @Autowired

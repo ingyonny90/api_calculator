@@ -16,7 +16,7 @@ import org.junit.runner.RunWith;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(properties = "spring.datasource.url=jdbc:postgresql://${DATABASE_HOST:localhost}:5432/calculator")
 public class OperandServiceTest {
 
     @MockBean
