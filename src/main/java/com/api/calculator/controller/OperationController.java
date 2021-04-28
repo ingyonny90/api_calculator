@@ -1,11 +1,14 @@
 package com.api.calculator.controller;
 
+
 import com.api.calculator.service.IOperandService;
 import com.api.calculator.service.IUserOperationService;
 
 import static com.api.calculator.utilities.GeneralConstants.*;
 
 import static com.api.calculator.utilities.MessageConstants.*;
+
+import com.api.calculator.service.IUserService;
 import com.api.calculator.utilities.OperatorType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -56,8 +59,6 @@ public class OperationController {
         model.addAttribute(MESSAGE_STYLE, ALERT_SUCCESS);
         return INDEX_PAGE;
     }
-
-
 
 
 }
