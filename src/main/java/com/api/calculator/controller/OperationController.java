@@ -8,7 +8,6 @@ import static com.api.calculator.utilities.GeneralConstants.*;
 
 import static com.api.calculator.utilities.MessageConstants.*;
 
-import com.api.calculator.service.IUserService;
 import com.api.calculator.utilities.OperatorType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,7 +34,7 @@ public class OperationController {
     @GetMapping("/token")
     public String generateToken(Model model) {
         String token = userOperationService.createUserOperation();
-        model.addAttribute(MESSAGE_ATTRIBUTE, TOKEN_GENERATED_INFO_MESSAGE.concat(token));
+        model.addAttribute(MESSAGE_ATTRIBUTE, TOKEN_GENERATED_PROPERTY.concat(token));
         model.addAttribute(MESSAGE_STYLE, ALERT_SUCCESS);
         return INDEX_PAGE;
     }
@@ -44,7 +43,7 @@ public class OperationController {
     public String addOperand(@RequestParam(value = "token") String token,
                              @RequestParam(value = "operand") String operand, Model model) {
         operandService.saveOperand(token, operand);
-        model.addAttribute(MESSAGE_ATTRIBUTE, OPERAND_SAVED_INFO_MESSAGE);
+        model.addAttribute(MESSAGE_ATTRIBUTE, OPERAND_SAVED_PROPERTY);
         model.addAttribute(MESSAGE_STYLE, ALERT_SUCCESS);
         return INDEX_PAGE;
     }
@@ -54,7 +53,7 @@ public class OperationController {
                                      @RequestParam(value = "operationType") OperatorType operationType, Model model) {
 
         BigDecimal result = userOperationService.calculateOperation(token,operationType);
-        model.addAttribute(MESSAGE_ATTRIBUTE, RESULT_GENERATED_INFO_MESSAGE
+        model.addAttribute(MESSAGE_ATTRIBUTE, RESULT_GENERATED_PROPERTY
                 .concat(String.valueOf(Optional.ofNullable(result).orElse(BigDecimal.ZERO))));
         model.addAttribute(MESSAGE_STYLE, ALERT_SUCCESS);
         return INDEX_PAGE;

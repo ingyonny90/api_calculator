@@ -5,6 +5,6 @@ import com.api.calculator.utilities.MessageConstants;
 public class RequiredFieldsException extends CalculatorException{
 
     public RequiredFieldsException() {
-        super(MessageConstants.REQUIRED_FIELD_ERROR_MESSAGE);
+        super(MessageConstants.REQUIRED_FIELD_PROPERTY);
     }
 }
