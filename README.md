@@ -19,6 +19,9 @@ Tecnologias utilidades en el desarrollo:
 Imagen docker:
 - docker pull ingyonny90/api_calculator:latest
 
+Docker compose:
+- docker-compose up
+
 
 
 # Aplicación escalable y elástica:
