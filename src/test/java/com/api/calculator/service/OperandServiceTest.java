@@ -37,7 +37,7 @@ public class OperandServiceTest {
 
         assertThatExceptionOfType(RequiredFieldsException.class).isThrownBy(() -> {
             operandService.saveOperand(token, operand);
-        }).hasToString("com.api.calculator.exceptions.RequiredFieldsException: Todos los campos son requeridos");
+        }).hasToString("com.api.calculator.exceptions.RequiredFieldsException: requiredField.error");
     }
 
     @Test
@@ -49,7 +49,7 @@ public class OperandServiceTest {
 
         assertThatExceptionOfType(InvalidNumberException.class).isThrownBy(() -> {
             operandService.saveOperand(token, operand);
-        }).hasToString("com.api.calculator.exceptions.InvalidNumberException: El operando debe ser un número valido");
+        }).hasToString("com.api.calculator.exceptions.InvalidNumberException: operandNoValid.error");
     }
 
     @Test
