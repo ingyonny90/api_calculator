@@ -10,6 +10,8 @@ import static com.api.calculator.utilities.MessageConstants.*;
 
 import com.api.calculator.utilities.OperatorType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
@@ -26,6 +28,9 @@ public class OperationController {
     @Autowired
     private IOperandService operandService;
 
+    @Autowired
+    private MessageSource messageSource;
+
     @RequestMapping(value = "/")
     public String indexPage() {
         return INDEX_PAGE;
@@ -34,7 +39,8 @@ public class OperationController {
     @GetMapping("/token")
     public String generateToken(Model model) {
         String token = userOperationService.createUserOperation();
-        model.addAttribute(MESSAGE_ATTRIBUTE, TOKEN_GENERATED_PROPERTY.concat(token));
+        model.addAttribute(MESSAGE_ATTRIBUTE, messageSource.getMessage(TOKEN_GENERATED_PROPERTY,
+                new String[]{token}, LocaleContextHolder.getLocale()));
         model.addAttribute(MESSAGE_STYLE, ALERT_SUCCESS);
         return INDEX_PAGE;
     }
@@ -43,7 +49,8 @@ public class OperationController {
     public String addOperand(@RequestParam(value = "token") String token,
                              @RequestParam(value = "operand") String operand, Model model) {
         operandService.saveOperand(token, operand);
-        model.addAttribute(MESSAGE_ATTRIBUTE, OPERAND_SAVED_PROPERTY);
+        model.addAttribute(MESSAGE_ATTRIBUTE, messageSource.getMessage(OPERAND_SAVED_PROPERTY,
+                null, LocaleContextHolder.getLocale()));
         model.addAttribute(MESSAGE_STYLE, ALERT_SUCCESS);
         return INDEX_PAGE;
     }
@@ -52,9 +59,9 @@ public class OperationController {
     public String calculateOperation(@RequestParam(value = "token") String token,
                                      @RequestParam(value = "operationType") OperatorType operationType, Model model) {
 
-        BigDecimal result = userOperationService.calculateOperation(token,operationType);
-        model.addAttribute(MESSAGE_ATTRIBUTE, RESULT_GENERATED_PROPERTY
-                .concat(String.valueOf(Optional.ofNullable(result).orElse(BigDecimal.ZERO))));
+        BigDecimal result = userOperationService.calculateOperation(token, operationType);
+        model.addAttribute(MESSAGE_ATTRIBUTE, messageSource.getMessage(RESULT_GENERATED_PROPERTY,
+                new String[]{String.valueOf(Optional.ofNullable(result).orElse(BigDecimal.ZERO))}, LocaleContextHolder.getLocale()));
         model.addAttribute(MESSAGE_STYLE, ALERT_SUCCESS);
         return INDEX_PAGE;
     }

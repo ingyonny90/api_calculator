@@ -14,9 +14,15 @@
 </div>
 
 <div class="container mt-4">
+  <span class="idiomas">
+  <a th:href="|@{/}?lang=es|"><img th:src="@{/img/spain.svg.png}" width="20" height="20" alt="Español"></a>
+  <a th:href="|@{/}?lang=en|"><img th:src="@{/img/usa.svg.png}" width="20" height="20" alt="English"></a>
+</span>
+</div>
 
-    <a th:href="@{/token}" class="btn btn-primary">Solicitar token</a>
-    <a th:href="@{/audit}" class="btn btn-primary">Ver historial</a>
+<div class="container mt-4">
+    <a th:href="@{/token}" class="btn btn-primary" th:text="#{index.tokenRequest}"></a>
+    <a th:href="@{/audit}" class="btn btn-primary" th:text="#{index.seeHistorial}"></a>
     <p></p>
     <p></p>
 </div>
@@ -26,17 +32,17 @@
         <div class="col-sm-6">
             <div class="card">
                 <div class="card-header">
-                    <h3>Agregar operandos</h3>
+                    <h3 th:text="#{index.addOperand}"></h3>
                 </div>
                 <div class="card-body">
                     <div class="form-group">
-                        <label class="required">Token: *</label>
+                        <label class="required" th:text="#{index.token}">Token: *</label>
                         <input th:name="token" type="text" class="form-control"/>
 
-                        <label>Operando:</label>
+                        <label th:text="#{index.operand}"></label>
                         <input th:name="operand" type="text" class="form-control"/>
                         <div class="card-footer">
-                            <input type="submit" value="Guardar" class="btn btn-success"/>
+                            <input type="submit" th:value="#{index.saveButton}" class="btn btn-success"/>
                         </div>
                     </div>
                 </div>
@@ -51,23 +57,23 @@
         <div class="col-sm-6">
             <div class="card">
                 <div class="card-header">
-                    <h3>Ejecutar operación</h3>
+                    <h3 th:text="#{index.executeOperation}"></h3>
                 </div>
                 <div class="card-body">
                     <div class="form-group">
-                        <label>Token:</label>
+                        <label th:text="#{index.token}"></label>
                         <input th:name="token" type="text" class="form-control"/>
 
-                        <label>Tipo de operación:</label>
+                        <label th:text="#{index.operationType}"></label>
                         <select th:name="operationType" class="form-control">
-                            <option value="SUM">Suma</option>
-                            <option value="SUBTRACT">Resta</option>
-                            <option value="MULTIPLY">Multiplicación</option>
-                            <option value="DIVIDE">División</option>
-                            <option value="EMPOWERMENT">Potenciación</option>
+                            <option value="SUM" th:text="#{index.sum}"></option>
+                            <option value="SUBTRACT" th:text="#{index.subtract}"></option>
+                            <option value="MULTIPLY" th:text="#{index.multiply}"></option>
+                            <option value="DIVIDE" th:text="#{index.divide}"> </option>
+                            <option value="EMPOWERMENT" th:text="#{index.pow}"></option>
                         </select>
                         <div class="card-footer">
-                            <input type="submit" value="Ejecutar" class="btn btn-success"/>
+                            <input type="submit" th:value="#{index.execute}" class="btn btn-success"/>
                         </div>
                     </div>
                 </div>
